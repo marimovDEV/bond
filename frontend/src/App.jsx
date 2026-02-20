@@ -19,6 +19,8 @@ import HeroEditor from './admin/pages/HeroEditor';
 import RankingManager from './admin/pages/RankingManager';
 import TutorialEditor from './admin/pages/TutorialEditor';
 import PartnersManager from './admin/pages/PartnersManager';
+import HallOfFameEditor from './admin/pages/HallOfFameEditor';
+import AnalyticsEditor from './admin/pages/AnalyticsEditor';
 
 const LandingPage = () => (
     <>
@@ -60,6 +62,8 @@ function App() {
                                 <Route path="ranking" element={<RankingManager />} />
                                 <Route path="tutorial" element={<TutorialEditor />} />
                                 <Route path="partners" element={<PartnersManager />} />
+                                <Route path="hall-of-fame" element={<HallOfFameEditor />} />
+                                <Route path="analytics" element={<AnalyticsEditor />} />
                             </Route>
 
                             {/* Catch-all */}

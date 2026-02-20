@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FiHome, FiEdit2, FiList, FiLayout, FiVideo, FiAward, FiLogOut, FiUsers } from 'react-icons/fi';
+import { FiHome, FiEdit2, FiList, FiLayout, FiVideo, FiAward, FiLogOut, FiBarChart2, FiStar } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 
 const Sidebar = () => {
@@ -16,7 +16,9 @@ const Sidebar = () => {
         { name: 'Dashboard', path: '/admin', icon: <FiHome /> },
         { name: 'Hero Editor', path: '/admin/hero', icon: <FiEdit2 /> },
         { name: 'Reyting Manager', path: '/admin/ranking', icon: <FiList /> },
-        { name: 'Video Qo\'llanma', path: '/admin/tutorial', icon: <FiVideo /> },
+        { name: 'Analytics', path: '/admin/analytics', icon: <FiBarChart2 /> },
+        { name: 'Shon-sharaf Zali', path: '/admin/hall-of-fame', icon: <FiStar /> },
+        { name: "Video Qo'llanma", path: '/admin/tutorial', icon: <FiVideo /> },
         { name: 'Hamkorlar', path: '/admin/partners', icon: <FiAward /> },
     ];
 

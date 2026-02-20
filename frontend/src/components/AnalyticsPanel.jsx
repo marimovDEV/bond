@@ -1,7 +1,17 @@
 import React from 'react';
 import { FiBookOpen, FiCalendar, FiUsers, FiTarget } from 'react-icons/fi';
+import { useContent } from '../context/ContentContext';
 
 const AnalyticsPanel = () => {
+    const { data } = useContent();
+    const { analytics } = data;
+    const pct = parseFloat(analytics.progressPercent) || 0;
+
+    // Circle math for SVG
+    const r = 100;
+    const circ = 2 * Math.PI * r;
+    const offset = circ * (1 - pct / 100);
+
     return (
         <div className="flex flex-col gap-6 h-full">
             {/* Main Analytics Card */}
@@ -13,15 +23,18 @@ const AnalyticsPanel = () => {
 
                 {/* Circular Progress */}
                 <div className="relative w-48 h-48 md:w-60 md:h-60 flex items-center justify-center mb-12">
-                    <svg className="w-full h-full transform -rotate-90">
-                        <circle cx="96" cy="96" r="80" stroke="currentColor" strokeWidth="12" fill="transparent" className="text-white/5 md:hidden" />
-                        <circle cx="120" cy="120" r="100" stroke="currentColor" strokeWidth="16" fill="transparent" className="text-white/5 hidden md:block" />
-                        <circle cx="96" cy="96" r="80" stroke="currentColor" strokeWidth="12" fill="transparent" strokeDasharray={502} strokeDashoffset={502 * (1 - 0.333)} className="text-cyan-400 md:hidden" strokeLinecap="round" />
-                        <circle cx="120" cy="120" r="100" stroke="currentColor" strokeWidth="16" fill="transparent" strokeDasharray={628} strokeDashoffset={628 * (1 - 0.333)} className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)] hidden md:block" strokeLinecap="round" />
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 240 240">
+                        <circle cx="120" cy="120" r={r} stroke="white" strokeOpacity="0.05" strokeWidth="16" fill="transparent" />
+                        <circle cx="120" cy="120" r={r} stroke="#22d3ee" strokeWidth="16" fill="transparent"
+                            strokeDasharray={circ}
+                            strokeDashoffset={offset}
+                            strokeLinecap="round"
+                            className="drop-shadow-[0_0_15px_rgba(34,211,238,0.8)] transition-all duration-500"
+                        />
                     </svg>
                     <div className="absolute flex flex-col items-center">
-                        <span className="text-4xl md:text-5xl font-black tracking-tighter">33.3%</span>
-                        <span className="text-[8px] md:text-[10px] font-bold text-cyan-400 mt-1 uppercase tracking-widest">Shahar Ligasi</span>
+                        <span className="text-4xl md:text-5xl font-black tracking-tighter">{pct.toFixed(1)}%</span>
+                        <span className="text-[8px] md:text-[10px] font-bold text-cyan-400 mt-1 uppercase tracking-widest">{analytics.progressLabel}</span>
                     </div>
 
                     {/* Orbital Icons */}
@@ -37,12 +50,7 @@ const AnalyticsPanel = () => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-4 flex-1">
-                {[
-                    { label: 'Reytingda', val: '#12' },
-                    { label: 'Topshiriqlar', val: '89/120' },
-                    { label: 'O\'quvchilar', val: '1,247' },
-                    { label: 'Dars Holati', val: '247' },
-                ].map((stat, i) => (
+                {analytics.stats.map((stat, i) => (
                     <div key={i} className="bg-[#0A2540]/60 backdrop-blur-xl border border-white/10 rounded-[1.8rem] p-6 flex flex-col justify-center hover:border-cyan-400/30 transition-all group">
                         <p className="text-cyan-400 text-[9px] font-black uppercase tracking-[0.2em] mb-1 group-hover:scale-105 transition-transform origin-left">{stat.label}</p>
                         <p className="text-2xl font-black tracking-tight">{stat.val}</p>

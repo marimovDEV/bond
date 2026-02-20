@@ -26,6 +26,21 @@ const initialData = {
         { id: 4, name: "Guli Shodiya", school: "1-Gimnaziya", progress: 89, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Guli" },
         { id: 5, name: "Jasur Bahtiyorov", school: "School 21", progress: 87, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jasur" }
     ],
+    hallOfFame: [
+        { id: 1, title: 'Yanvar Kubogi 2024', sub: '1-2-sinfi talabalaridan', date: 'DECEMBER 2024', img: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=2071&auto=format&fit=crop' },
+        { id: 2, title: 'Bond Aql Janggi', sub: 'Davlat chempionati', date: 'NOVEMBER 2024', img: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop' },
+        { id: 3, title: 'Respublika Olimpiadasi', sub: '3-4-sinfi talabalaridan', date: 'OCTOBER 2024', img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop' },
+    ],
+    analytics: {
+        progressPercent: 33.3,
+        progressLabel: 'Shahar Ligasi',
+        stats: [
+            { label: 'Reytingda', val: '#12' },
+            { label: 'Topshiriqlar', val: '89/120' },
+            { label: "O'quvchilar", val: '1,247' },
+            { label: 'Dars Holati', val: '247' },
+        ]
+    },
     tutorial: {
         title: "Video Qo'llanma",
         subtitle: "Sizni platformadan foydalanish qulayligi uchun maxsus tayyorlangan video-darslik. Bu yerda barcha savollaringizga javob topasiz.",
@@ -103,8 +118,16 @@ export const ContentProvider = ({ children }) => {
         setData(prev => ({ ...prev, partners: newPartners }));
     };
 
+    const updateHallOfFame = (newCards) => {
+        setData(prev => ({ ...prev, hallOfFame: newCards }));
+    };
+
+    const updateAnalytics = (newData) => {
+        setData(prev => ({ ...prev, analytics: { ...prev.analytics, ...newData } }));
+    };
+
     return (
-        <ContentContext.Provider value={{ data, updateHero, updateRanking, updateTutorial, updatePartners }}>
+        <ContentContext.Provider value={{ data, updateHero, updateRanking, updateTutorial, updatePartners, updateHallOfFame, updateAnalytics }}>
             {children}
         </ContentContext.Provider>
     );
