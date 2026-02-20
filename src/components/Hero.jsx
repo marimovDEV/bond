@@ -74,9 +74,14 @@ const Hero = () => {
                         ))}
                     </div>
 
-                    <button className="w-full sm:w-auto bg-gradient-to-r from-[#FF8A00] to-[#FFC700] text-black px-12 py-5 rounded-full text-lg font-black tracking-tight active:scale-95 shadow-[0_10px_40px_rgba(255,138,0,0.3)] hover:shadow-[0_15px_50px_rgba(255,138,0,0.5)] transition-all duration-300 uppercase">
-                        Hozir ro'yxatdan o'tish!
-                    </button>
+                    <a
+                        href="https://bondolympiad.uz"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block w-full sm:w-auto bg-gradient-to-r from-[#FF8A00] to-[#FFC700] text-black px-12 py-5 rounded-full text-lg font-black tracking-tight active:scale-95 shadow-[0_10px_40px_rgba(255,138,0,0.3)] hover:shadow-[0_15px_50px_rgba(255,138,0,0.5)] transition-all duration-300 uppercase text-center"
+                    >
+                        Ro'yxatdan o'tish
+                    </a>
                 </motion.div>
 
                 {/* Right Column: Illustration Placeholder */}

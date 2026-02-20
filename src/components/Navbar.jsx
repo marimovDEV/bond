@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiSearch, FiBell, FiMail, FiX, FiUser, FiLock, FiSend } from 'react-icons/fi';
+import { FiSearch, FiBell, FiMail, FiX, FiSend } from 'react-icons/fi';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const [activeModal, setActiveModal] = useState(null); // 'login' | 'contact' | null
+    const [activeModal, setActiveModal] = useState(null); // 'contact' | null
 
     useEffect(() => {
         const handleScroll = () => {
@@ -55,42 +55,20 @@ const Navbar = () => {
                     <FiX />
                 </button>
 
-                {type === 'login' ? (
-                    <div className="flex flex-col">
-                        <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">Shaxsiy Kabinet</h3>
-                        <p className="text-white/40 text-sm mb-8">Tizimga kirish uchun malumotlaringizni kiriting</p>
+                <div className="flex flex-col">
+                    <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">Bog'lanish</h3>
+                    <p className="text-white/40 text-sm mb-8">Savollaringiz bormi? Bizga xabar qoldiring</p>
 
-                        <div className="space-y-4">
-                            <div className="relative">
-                                <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
-                                <input type="text" placeholder="ID yoki Telefon" className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-sm outline-none focus:border-cyan-500/50 transition-colors" />
-                            </div>
-                            <div className="relative">
-                                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
-                                <input type="password" placeholder="Parol" className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-sm outline-none focus:border-cyan-500/50 transition-colors" />
-                            </div>
-                        </div>
-
-                        <button className="w-full mt-8 bg-cyan-500 text-black py-4 rounded-2xl font-black text-lg shadow-lg shadow-cyan-500/20 active:scale-95 transition-all">
-                            KIRISH
-                        </button>
+                    <div className="space-y-4">
+                        <input type="text" placeholder="Ismingiz" className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm outline-none focus:border-cyan-500/50 transition-colors" />
+                        <input type="text" placeholder="Telefon raqamingiz" className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm outline-none focus:border-cyan-500/50 transition-colors" />
+                        <textarea placeholder="Xabaringiz" rows="4" className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm outline-none focus:border-cyan-500/50 transition-colors resize-none" />
                     </div>
-                ) : (
-                    <div className="flex flex-col">
-                        <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">Bog'lanish</h3>
-                        <p className="text-white/40 text-sm mb-8">Savollaringiz bormi? Bizga xabar qoldiring</p>
 
-                        <div className="space-y-4">
-                            <input type="text" placeholder="Ismingiz" className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm outline-none focus:border-cyan-500/50 transition-colors" />
-                            <input type="text" placeholder="Telefon raqamingiz" className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm outline-none focus:border-cyan-500/50 transition-colors" />
-                            <textarea placeholder="Xabaringiz" rows="4" className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm outline-none focus:border-cyan-500/50 transition-colors resize-none" />
-                        </div>
-
-                        <button className="w-full mt-8 bg-gradient-to-r from-orange-500 to-yellow-400 text-black py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-lg shadow-orange-500/20 active:scale-95 transition-all">
-                            YUBORISH <FiSend />
-                        </button>
-                    </div>
-                )}
+                    <button className="w-full mt-8 bg-gradient-to-r from-orange-500 to-yellow-400 text-black py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-lg shadow-orange-500/20 active:scale-95 transition-all">
+                        YUBORISH <FiSend />
+                    </button>
+                </div>
             </motion.div>
         </motion.div>
     );
@@ -129,12 +107,14 @@ const Navbar = () => {
                             <FiBell className="hover:text-white cursor-pointer transition-colors" />
                             <FiMail className="hover:text-white cursor-pointer transition-colors" />
                         </div>
-                        <button
-                            onClick={() => setActiveModal('login')}
-                            className="bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-2.5 rounded-xl text-[13px] font-bold tracking-tight hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all text-white active:scale-95 uppercase"
+                        <a
+                            href="https://bondolympiad.uz"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-2.5 rounded-xl text-[13px] font-black tracking-tight hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all text-white active:scale-95 uppercase"
                         >
-                            Kabinet
-                        </button>
+                            Ro'yxatdan o'tish
+                        </a>
                     </div>
 
                     {/* Mobile Menu Toggle */}
@@ -173,18 +153,17 @@ const Navbar = () => {
                                 </motion.button>
                             ))}
                             <div className="w-full h-px bg-white/10 my-4" />
-                            <motion.button
+                            <motion.a
+                                href="https://bondolympiad.uz"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.3 }}
-                                onClick={() => {
-                                    setIsOpen(false);
-                                    setActiveModal('login');
-                                }}
-                                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-4 rounded-2xl font-black text-lg shadow-[0_10px_30px_rgba(6,182,212,0.3)] uppercase"
+                                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-4 rounded-2xl font-black text-lg shadow-[0_10px_30px_rgba(6,182,212,0.3)] uppercase block"
                             >
-                                SHAXSIY KABINET
-                            </motion.button>
+                                Ro'yxatdan o'tish
+                            </motion.a>
                         </div>
                     </motion.div>
                 )}
