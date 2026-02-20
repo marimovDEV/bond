@@ -84,24 +84,25 @@ const HeroEditor = () => {
                     <div className="bg-[#0A1A2F] border border-white/10 p-8 rounded-[2.5rem] space-y-5">
                         <h3 className="text-lg font-black uppercase tracking-tight">⏱ Countdown (Ortga Sanoq)</h3>
                         <p className="text-white/30 text-xs">Bu yerda belgilangan vaqtdan ortga sanoq boshlaydi</p>
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-4 gap-3">
                             {[
                                 { label: 'KUN', field: 'days', max: 365 },
                                 { label: 'SOAT', field: 'hours', max: 23 },
-                                { label: 'MINUT', field: 'minutes', max: 59 }
+                                { label: 'MINUT', field: 'minutes', max: 59 },
+                                { label: 'SEKUNDT', field: 'seconds', max: 59 }
                             ].map(({ label, field, max }) => (
                                 <div key={field}>
-                                    <label className="text-[10px] font-black uppercase text-white/30 mb-2 block tracking-widest text-center">{label}</label>
+                                    <label className="text-[9px] font-black uppercase text-white/30 mb-2 block tracking-widest text-center">{label}</label>
                                     <input
                                         type="number"
                                         min="0"
                                         max={max}
-                                        value={formData.countdown[field]}
+                                        value={formData.countdown?.[field] ?? 0}
                                         onChange={e => setFormData({
                                             ...formData,
-                                            countdown: { ...formData.countdown, [field]: Math.max(0, parseInt(e.target.value) || 0) }
+                                            countdown: { ...formData.countdown, [field]: Math.max(0, Math.min(max, parseInt(e.target.value) || 0)) }
                                         })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-4 text-center text-2xl font-black outline-none focus:border-cyan-500/50 transition-colors"
+                                        className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-2 text-center text-xl font-black outline-none focus:border-cyan-500/50 transition-colors"
                                     />
                                 </div>
                             ))}

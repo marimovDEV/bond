@@ -74,10 +74,20 @@ export const ContentProvider = ({ children }) => {
             const saved = localStorage.getItem('bond_content_data');
             const base = saved ? JSON.parse(saved) : initialData;
             const binary = getBinaryData();
+            // Deep merge: always use initialData as default so no field is ever undefined
             return {
+                ...initialData,
                 ...base,
-                hero: { ...base.hero, heroImage: binary.heroImage },
-                tutorial: { ...base.tutorial, videoBase64: binary.videoBase64 }
+                hero: { ...initialData.hero, ...base.hero, heroImage: binary.heroImage },
+                analytics: {
+                    ...initialData.analytics,
+                    ...(base.analytics || {}),
+                    stats: Array.isArray(base.analytics?.stats) ? base.analytics.stats : initialData.analytics.stats,
+                },
+                hallOfFame: Array.isArray(base.hallOfFame) ? base.hallOfFame : initialData.hallOfFame,
+                ranking: Array.isArray(base.ranking) ? base.ranking : initialData.ranking,
+                partners: Array.isArray(base.partners) ? base.partners : initialData.partners,
+                tutorial: { ...initialData.tutorial, ...(base.tutorial || {}), videoBase64: binary.videoBase64 },
             };
         } catch {
             return initialData;

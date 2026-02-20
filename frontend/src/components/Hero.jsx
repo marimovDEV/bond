@@ -11,7 +11,7 @@ const Hero = () => {
     // Reset countdown when admin changes values
     useEffect(() => {
         setTimeLeft({ ...hero.countdown });
-    }, [hero.countdown.days, hero.countdown.hours, hero.countdown.minutes]);
+    }, [hero.countdown.days, hero.countdown.hours, hero.countdown.minutes, hero.countdown.seconds]);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -60,16 +60,17 @@ const Hero = () => {
                     </p>
 
                     {/* Countdown */}
-                    <div className="flex justify-center lg:justify-start gap-4 mb-16">
+                    <div className="flex justify-center lg:justify-start gap-3 mb-16 flex-wrap">
                         {[
                             { val: timeLeft.days, label: 'KUN' },
                             { val: timeLeft.hours, label: 'SOAT' },
-                            { val: timeLeft.minutes, label: 'MINUT' }
+                            { val: timeLeft.minutes, label: 'MINUT' },
+                            { val: timeLeft.seconds, label: 'SEKUNDT' }
                         ].map((box, i) => (
-                            <div key={i} className="bg-[#0A1A2F] border border-cyan-400/20 w-24 h-28 md:w-28 md:h-32 rounded-3xl flex flex-col items-center justify-center shadow-2xl relative group overflow-hidden">
+                            <div key={i} className="bg-[#0A1A2F] border border-cyan-400/20 w-20 h-24 md:w-24 md:h-28 rounded-3xl flex flex-col items-center justify-center shadow-2xl relative group overflow-hidden">
                                 <div className="absolute inset-0 bg-cyan-400/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <span className="text-3xl md:text-5xl font-black text-white relative z-10">{String(box.val).padStart(2, '0')}</span>
-                                <span className="text-[10px] md:text-[12px] font-black text-cyan-400 tracking-widest mt-2 relative z-10">{box.label}</span>
+                                <span className="text-2xl md:text-4xl font-black text-white relative z-10 tabular-nums">{String(box.val ?? 0).padStart(2, '0')}</span>
+                                <span className="text-[9px] md:text-[11px] font-black text-cyan-400 tracking-widest mt-2 relative z-10">{box.label}</span>
                             </div>
                         ))}
                     </div>
