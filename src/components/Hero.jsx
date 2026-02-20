@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useContent } from '../context/ContentContext';
 
 const Hero = () => {
-    const [timeLeft, setTimeLeft] = useState({
-        days: 2,
-        hours: 15,
-        minutes: 4,
-        seconds: 59
-    });
+    const { data } = useContent();
+    const { hero } = data;
+
+    const [timeLeft, setTimeLeft] = useState(hero.countdown);
+
+    useEffect(() => {
+        setTimeLeft(hero.countdown);
+    }, [hero.countdown]);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -50,13 +53,12 @@ const Hero = () => {
                     </div>
 
                     <h1 className="text-4xl sm:text-5xl md:text-[72px] lg:text-[84px] font-black leading-[0.98] mb-8 tracking-tighter">
-                        <span className="text-white block mb-2">Yanvar Kubogi:</span>
-                        <span className="text-gradient block">Bond: Aql Janggi 2024</span>
+                        <span className="text-white block mb-2">{hero.titlePrefix}</span>
+                        <span className="text-gradient block">{hero.titleGradient}</span>
                     </h1>
 
-                    <p className="text-base md:text-lg text-white/50 mb-12 leading-relaxed font-medium max-w-[550px] mx-auto lg:mx-0">
-                        Matematika, Ingliz Tili va Informatika Bilimlarini Sinashingiz<br />
-                        Sahrinda oflayn catmash va yordamchi o'zidagi onlini
+                    <p className="text-base md:text-lg text-white/50 mb-12 leading-relaxed font-medium max-w-[550px] mx-auto lg:mx-0 whitespace-pre-line">
+                        {hero.description}
                     </p>
 
                     {/* Figma Style Countdown */}
@@ -75,12 +77,12 @@ const Hero = () => {
                     </div>
 
                     <a
-                        href="https://bondolympiad.uz"
+                        href={hero.ctaLink}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-block w-full sm:w-auto bg-gradient-to-r from-[#FF8A00] to-[#FFC700] text-black px-12 py-5 rounded-full text-lg font-black tracking-tight active:scale-95 shadow-[0_10px_40px_rgba(255,138,0,0.3)] hover:shadow-[0_15px_50px_rgba(255,138,0,0.5)] transition-all duration-300 uppercase text-center"
                     >
-                        Ro'yxatdan o'tish
+                        {hero.ctaText}
                     </a>
                 </motion.div>
 
