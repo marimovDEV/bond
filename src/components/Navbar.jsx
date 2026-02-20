@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiSearch, FiBell, FiMail, FiX, FiSend } from 'react-icons/fi';
+import { FiX, FiSend } from 'react-icons/fi';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -102,11 +102,6 @@ const Navbar = () => {
 
                     {/* Right Actions (Desktop) */}
                     <div className="hidden lg:flex items-center gap-5 shrink-0">
-                        <div className="flex items-center gap-4 text-white/50 text-xl mr-2">
-                            <FiSearch className="hover:text-white cursor-pointer transition-colors" />
-                            <FiBell className="hover:text-white cursor-pointer transition-colors" />
-                            <FiMail className="hover:text-white cursor-pointer transition-colors" />
-                        </div>
                         <a
                             href="https://bondolympiad.uz"
                             target="_blank"
