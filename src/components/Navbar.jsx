@@ -15,12 +15,24 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const scrollToSection = (id) => {
+        setIsOpen(false);
+        const element = document.getElementById(id);
+        if (element) {
+            window.scrollTo({
+                top: element.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     const navLinks = [
-        { name: 'Olimpiadalar', href: '#' },
-        { name: 'Reyting', href: '#' },
-        { name: 'Shon-sharaf Zali', href: '#' },
-        { name: 'Tayyorgarlik', href: '#' },
-        { name: 'Kontaktlar', href: '#footer', onClick: () => setActiveModal('contact') }
+        { name: 'Olimpiadalar', id: 'hero' },
+        { name: 'Reyting', id: 'ranking' },
+        { name: 'Shon-sharaf Zali', id: 'hall-of-fame' },
+        { name: 'Qo\'llanma', id: 'tutorial' },
+        { name: 'Hamkorlar', id: 'partners' },
+        { name: 'Kontaktlar', id: 'footer', onClick: () => setActiveModal('contact') }
     ];
 
     const Modal = ({ type, onClose }) => (
@@ -89,7 +101,7 @@ const Navbar = () => {
                 }`}>
                 <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
 
-                    {/* Logo - Refined Figma Style */}
+                    {/* Logo */}
                     <div className="flex flex-col leading-none shrink-0 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                         <span className="text-cyan-400 text-2xl font-black tracking-tighter">BOND</span>
                         <span className="text-[#FFB800] text-[10px] font-black tracking-[0.2em] border border-[#FFB800] px-1.5 py-0.5 mt-0.5 rounded-sm uppercase">OLYMPIAD</span>
@@ -97,12 +109,12 @@ const Navbar = () => {
 
                     {/* Navigation - Center (Desktop) */}
                     <nav className="hidden xl:flex items-center gap-6 2xl:gap-10">
-                        <ul className="flex items-center gap-6 2xl:gap-8 text-white/70 text-[13px] font-bold tracking-tight">
+                        <ul className="flex items-center gap-5 2xl:gap-7 text-white/70 text-[12px] font-bold tracking-tight uppercase">
                             {navLinks.map((link) => (
                                 <li
                                     key={link.name}
                                     className="hover:text-white cursor-pointer transition-colors whitespace-nowrap"
-                                    onClick={link.onClick}
+                                    onClick={() => link.onClick ? link.onClick() : scrollToSection(link.id)}
                                 >
                                     {link.name}
                                 </li>
@@ -119,9 +131,9 @@ const Navbar = () => {
                         </div>
                         <button
                             onClick={() => setActiveModal('login')}
-                            className="bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-2.5 rounded-xl text-[13px] font-bold tracking-tight hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all text-white active:scale-95"
+                            className="bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-2.5 rounded-xl text-[13px] font-bold tracking-tight hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all text-white active:scale-95 uppercase"
                         >
-                            Shaxsiy Kabinet
+                            Kabinet
                         </button>
                     </div>
 
@@ -149,17 +161,16 @@ const Navbar = () => {
                     >
                         <div className="flex flex-col items-center gap-6 w-full max-w-xs text-center">
                             {navLinks.map((link, i) => (
-                                <motion.a
+                                <motion.button
                                     key={link.name}
-                                    href={link.href}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.05 }}
-                                    onClick={() => setIsOpen(false)}
-                                    className="text-2xl font-bold text-white/80 hover:text-white transition-colors tracking-tight"
+                                    onClick={() => link.onClick ? link.onClick() : scrollToSection(link.id)}
+                                    className="text-2xl font-black text-white/80 hover:text-cyan-400 transition-colors tracking-tighter uppercase"
                                 >
                                     {link.name}
-                                </motion.a>
+                                </motion.button>
                             ))}
                             <div className="w-full h-px bg-white/10 my-4" />
                             <motion.button
@@ -170,7 +181,7 @@ const Navbar = () => {
                                     setIsOpen(false);
                                     setActiveModal('login');
                                 }}
-                                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-4 rounded-2xl font-bold text-lg shadow-[0_10px_30px_rgba(6,182,212,0.3)]"
+                                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-4 rounded-2xl font-black text-lg shadow-[0_10px_30px_rgba(6,182,212,0.3)] uppercase"
                             >
                                 SHAXSIY KABINET
                             </motion.button>
