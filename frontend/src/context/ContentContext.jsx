@@ -11,6 +11,7 @@ const initialData = {
         description: "Matematika, Ingliz Tili va Informatika Bilimlarini Sinashingiz\nSahrinda oflayn catmash va yordamchi o'zidagi onlini",
         ctaText: "Ro'yxatdan o'tish",
         ctaLink: "https://bondolympiad.uz",
+        heroImage: null, // base64 or URL
         countdown: {
             days: 2,
             hours: 15,
@@ -28,25 +29,62 @@ const initialData = {
     tutorial: {
         title: "Video Qo'llanma",
         subtitle: "Sizni platformadan foydalanish qulayligi uchun maxsus tayyorlangan video-darslik. Bu yerda barcha savollaringizga javob topasiz.",
-        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Placeholder
+        videoUrl: "",         // YouTube embed or external URL
+        videoBase64: null,    // uploaded local video (base64 data URL)
         thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
     },
     partners: [
-        { id: 1, name: "Cambridge Assessment" },
-        { id: 2, name: "British Council" },
-        { id: 3, name: "IDP IELTS" },
-        { id: 4, name: "Uzbekistan Youth Union" }
+        { id: 1, name: "Cambridge Assessment", website: "" },
+        { id: 2, name: "British Council", website: "" },
+        { id: 3, name: "IDP IELTS", website: "" },
+        { id: 4, name: "Uzbekistan Youth Union", website: "" }
     ]
+};
+
+// Separate storage for large binary data (images/videos) to avoid JSON size limits
+const getBinaryData = () => {
+    try {
+        return {
+            heroImage: localStorage.getItem('bond_hero_image') || null,
+            videoBase64: localStorage.getItem('bond_tutorial_video') || null,
+        };
+    } catch {
+        return { heroImage: null, videoBase64: null };
+    }
 };
 
 export const ContentProvider = ({ children }) => {
     const [data, setData] = useState(() => {
-        const saved = localStorage.getItem('bond_content_data');
-        return saved ? JSON.parse(saved) : initialData;
+        try {
+            const saved = localStorage.getItem('bond_content_data');
+            const base = saved ? JSON.parse(saved) : initialData;
+            const binary = getBinaryData();
+            return {
+                ...base,
+                hero: { ...base.hero, heroImage: binary.heroImage },
+                tutorial: { ...base.tutorial, videoBase64: binary.videoBase64 }
+            };
+        } catch {
+            return initialData;
+        }
     });
 
     useEffect(() => {
-        localStorage.setItem('bond_content_data', JSON.stringify(data));
+        // Save non-binary data
+        const toStore = {
+            ...data,
+            hero: { ...data.hero, heroImage: null },
+            tutorial: { ...data.tutorial, videoBase64: null }
+        };
+        localStorage.setItem('bond_content_data', JSON.stringify(toStore));
+
+        // Save binary separately
+        if (data.hero.heroImage) {
+            localStorage.setItem('bond_hero_image', data.hero.heroImage);
+        }
+        if (data.tutorial.videoBase64) {
+            localStorage.setItem('bond_tutorial_video', data.tutorial.videoBase64);
+        }
     }, [data]);
 
     const updateHero = (newData) => {
