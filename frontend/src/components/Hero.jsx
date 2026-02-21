@@ -27,7 +27,7 @@ const Hero = () => {
     }, [hero.countdown.days, hero.countdown.hours, hero.countdown.minutes]);
 
     return (
-        <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 hero-bg min-h-screen flex items-center overflow-hidden bg-[#020817]">
+        <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 hero-bg min-h-screen flex items-center overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             </div>
