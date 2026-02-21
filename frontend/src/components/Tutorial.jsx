@@ -54,7 +54,7 @@ const Tutorial = () => {
     };
 
     return (
-        <section id="tutorial" className="section-gap relative overflow-hidden bg-[#020817]">
+        <section id="tutorial" className="section-gap relative overflow-hidden">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="max-w-[1400px] mx-auto px-6 relative z-10">

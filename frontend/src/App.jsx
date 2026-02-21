@@ -41,7 +41,7 @@ function App() {
         <AuthProvider>
             <ContentProvider>
                 <Router>
-                    <div className="min-h-screen bg-[#020815] selection:bg-cyan-500/30 selection:text-white">
+                    <div className="min-h-screen global-bg selection:bg-cyan-500/30 selection:text-white">
                         <Routes>
                             <Route path="/" element={<LandingPage />} />
 

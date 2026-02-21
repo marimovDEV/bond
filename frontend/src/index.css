@@ -14,6 +14,11 @@
     body {
         @apply font-inter selection:bg-accent/30 selection:text-white antialiased;
         background-color: #020817;
+    }
+}
+
+@layer utilities {
+    .global-bg {
         background-image:
             linear-gradient(to bottom, rgba(2, 8, 23, 0.7), rgba(2, 8, 23, 0.7)),
             url('/img-bg.png');
@@ -22,9 +27,7 @@
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
-}
 
-@layer utilities {
     .hero-bg {
         position: relative;
     }
