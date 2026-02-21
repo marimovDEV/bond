@@ -6,18 +6,28 @@ export const useContent = () => useContext(ContentContext);
 
 const initialData = {
     hero: {
-        titlePrefix: "Yanvar Kubogi:",
-        titleGradient: "Bond: Aql Janggi 2024",
-        description: "Matematika, Ingliz Tili va Informatika Bilimlarini Sinashingiz\nSahrinda oflayn catmash va yordamchi o'zidagi onlini",
-        ctaText: "Ro'yxatdan o'tish",
-        ctaLink: "https://bondolympiad.uz",
-        heroImage: null, // base64 or URL
-        countdown: {
-            days: 2,
-            hours: 15,
-            minutes: 4,
-            seconds: 59
-        }
+        olympiads: [
+            {
+                id: 1,
+                titlePrefix: "Yanvar Kubogi:",
+                titleGradient: "Bond: Aql Janggi 2024",
+                description: "Matematika, Ingliz Tili va Informatika Bilimlarini Sinashingiz\nSahrinda oflayn catmash va yordamchi o'zidagi onlini",
+                ctaText: "Ro'yxatdan o'tish",
+                ctaLink: "https://bondolympiad.uz",
+                heroImage: null,
+                countdown: { days: 2, hours: 15, minutes: 4, seconds: 59 }
+            },
+            {
+                id: 2,
+                titlePrefix: "Navbatdagi:",
+                titleGradient: "BOND Olimpiadasi",
+                description: "Matematika, ingliz tili va IT fanlari sinovi.\nData school majmuasida bo'lib o'tadi.",
+                ctaText: "Batafsil ma'lumot",
+                ctaLink: "https://bondolympiad.uz",
+                heroImage: null,
+                countdown: { days: 10, hours: 2, minutes: 30, seconds: 0 }
+            }
+        ]
     },
     ranking: [
         { id: 1, name: "Azizbek Karimov", school: "IDUM 4, Toshkent", progress: 98, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aziz" },
@@ -78,7 +88,15 @@ export const ContentProvider = ({ children }) => {
             return {
                 ...initialData,
                 ...base,
-                hero: { ...initialData.hero, ...base.hero, heroImage: binary.heroImage },
+                hero: {
+                    olympiads: Array.isArray(base.hero?.olympiads)
+                        ? base.hero.olympiads.map((o, idx) => ({
+                            ...initialData.hero.olympiads[0], // fallback defaults
+                            ...o,
+                            heroImage: idx === 0 ? binary.heroImage : o.heroImage // restore main image for first
+                        }))
+                        : initialData.hero.olympiads
+                },
                 analytics: {
                     ...initialData.analytics,
                     ...(base.analytics || {}),
@@ -106,14 +124,17 @@ export const ContentProvider = ({ children }) => {
         // Save non-binary data
         const toStore = {
             ...data,
-            hero: { ...data.hero, heroImage: null },
+            hero: {
+                olympiads: data.hero.olympiads.map(o => ({ ...o, heroImage: o.heroImage?.startsWith('data:image') ? null : o.heroImage }))
+            },
             tutorial: { ...data.tutorial, videoBase64: null }
         };
         localStorage.setItem('bond_content_data', JSON.stringify(toStore));
 
-        // Save binary separately
-        if (data.hero.heroImage) {
-            localStorage.setItem('bond_hero_image', data.hero.heroImage);
+        // Save binary separately for the first olympiad as a simplified persistence strategy
+        const firstImage = data.hero.olympiads[0]?.heroImage;
+        if (firstImage && firstImage.startsWith('data:image')) {
+            localStorage.setItem('bond_hero_image', firstImage);
         }
         if (data.tutorial.videoBase64) {
             localStorage.setItem('bond_tutorial_video', data.tutorial.videoBase64);
