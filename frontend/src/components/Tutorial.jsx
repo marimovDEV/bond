@@ -88,28 +88,28 @@ const Tutorial = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="relative max-w-[1000px] mx-auto aspect-video rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl group"
+                    className="relative max-w-[1000px] mx-auto rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl group min-h-[300px] max-h-[80vh] flex items-center justify-center bg-black"
                     onClick={() => !isPlaying && setIsPlaying(true)}
                 >
                     {/* Playing State */}
                     {isPlaying && hasVideo ? (
-                        <div className="absolute inset-0 bg-black">
+                        <div className="w-full h-full flex items-center justify-center">
                             {renderVideo()}
                         </div>
                     ) : (
                         <>
                             {/* Thumbnail */}
-                            <div className={`absolute inset-0 ${hasVideo ? 'cursor-pointer' : ''} bg-[#0A1A2F]/80 backdrop-blur-sm group-hover:bg-[#0A1A2F]/60 transition-all duration-500`} />
+                            <div className={`absolute inset-0 z-10 ${hasVideo ? 'cursor-pointer' : ''} bg-[#0A1A2F]/80 backdrop-blur-sm group-hover:bg-[#0A1A2F]/60 transition-all duration-500`} />
                             {tutorial.thumbnail && (
                                 <img
                                     src={tutorial.thumbnail}
                                     alt="Tutorial Thumbnail"
-                                    className="w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-700"
+                                    className="w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-700 absolute inset-0"
                                 />
                             )}
 
                             {/* Play Button */}
-                            <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="absolute inset-0 flex items-center justify-center z-20">
                                 <div className="relative">
                                     {hasVideo && (
                                         <div className="absolute inset-0 bg-cyan-500/30 rounded-full animate-ping" />
@@ -126,7 +126,7 @@ const Tutorial = () => {
                             </div>
 
                             {/* Bottom Bar */}
-                            <div className="absolute bottom-8 left-8 right-8 flex items-center justify-between z-20">
+                            <div className="absolute bottom-8 left-8 right-8 flex items-center justify-between z-30">
                                 <div className="bg-black/40 backdrop-blur-xl border border-white/10 px-6 py-3 rounded-2xl flex items-center gap-4">
                                     <div className="w-10 h-10 bg-cyan-500/20 rounded-full flex items-center justify-center text-cyan-400 font-black">B</div>
                                     <div>
