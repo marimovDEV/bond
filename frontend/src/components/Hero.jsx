@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useContent } from '../context/ContentContext';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
