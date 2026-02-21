@@ -87,7 +87,15 @@ export const ContentProvider = ({ children }) => {
                 hallOfFame: Array.isArray(base.hallOfFame) ? base.hallOfFame : initialData.hallOfFame,
                 ranking: Array.isArray(base.ranking) ? base.ranking : initialData.ranking,
                 partners: Array.isArray(base.partners) ? base.partners : initialData.partners,
-                tutorial: { ...initialData.tutorial, ...(base.tutorial || {}), videoBase64: binary.videoBase64 },
+                tutorial: {
+                    ...initialData.tutorial,
+                    ...(base.tutorial || {}),
+                    // Force new default video if saved one is empty or still a YouTube link
+                    videoUrl: (base.tutorial?.videoUrl && !base.tutorial.videoUrl.includes('youtube'))
+                        ? base.tutorial.videoUrl
+                        : initialData.tutorial.videoUrl,
+                    videoBase64: binary.videoBase64
+                },
             };
         } catch {
             return initialData;
