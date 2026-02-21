@@ -14,7 +14,7 @@ const PartnersManager = () => {
     };
 
     const handleAdd = () => {
-        setPartners([...partners, { id: Date.now(), name: '', website: '' }]);
+        setPartners([...partners, { id: Date.now(), nameUz: '', nameRu: '', website: '' }]);
     };
 
     const handleDelete = (id) => {
@@ -51,13 +51,21 @@ const PartnersManager = () => {
                         <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-white/30 text-lg font-black shrink-0">
                             {idx + 1}
                         </div>
-                        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <input
-                                value={partner.name}
-                                onChange={e => handleChange(partner.id, 'name', e.target.value)}
-                                placeholder="Hamkor nomi"
-                                className="bg-white/5 border border-white/10 rounded-2xl py-3 px-5 text-sm outline-none focus:border-cyan-500/50 transition-colors"
-                            />
+                        <div className="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-2">
+                                <input
+                                    value={partner.nameUz || ''}
+                                    onChange={e => handleChange(partner.id, 'nameUz', e.target.value)}
+                                    placeholder="Nomi (UZ)"
+                                    className="bg-white/5 border border-white/10 rounded-2xl py-3 px-5 text-sm outline-none focus:border-cyan-500/50 transition-colors"
+                                />
+                                <input
+                                    value={partner.nameRu || ''}
+                                    onChange={e => handleChange(partner.id, 'nameRu', e.target.value)}
+                                    placeholder="Nomi (RU)"
+                                    className="bg-white/5 border border-white/10 rounded-2xl py-3 px-5 text-sm outline-none focus:border-cyan-500/50 transition-colors"
+                                />
+                            </div>
                             <div className="relative">
                                 <FiLink className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
                                 <input

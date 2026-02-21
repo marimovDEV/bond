@@ -1,10 +1,12 @@
 import React from 'react';
 import { FiBookOpen, FiCalendar, FiUsers, FiTarget } from 'react-icons/fi';
 import { useContent } from '../context/ContentContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const AnalyticsPanel = () => {
     const { data } = useContent();
     const { analytics } = data;
+    const { t } = useLanguage();
     const pct = parseFloat(analytics.progressPercent) || 0;
 
     // Circle math for SVG
@@ -17,7 +19,7 @@ const AnalyticsPanel = () => {
             {/* Main Analytics Card */}
             <div className="bg-[#0A2540]/60 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-6 md:p-8 relative overflow-hidden flex flex-col items-center shadow-2xl">
                 <h2 className="text-xl md:text-2xl font-black uppercase tracking-tighter self-start mb-10 relative">
-                    Analytics
+                    {t('myProgress')}
                     <span className="absolute -bottom-2 left-0 w-12 h-1 bg-cyan-400 rounded-full" />
                 </h2>
 
@@ -34,7 +36,7 @@ const AnalyticsPanel = () => {
                     </svg>
                     <div className="absolute flex flex-col items-center">
                         <span className="text-4xl md:text-5xl font-black tracking-tighter">{pct.toFixed(1)}%</span>
-                        <span className="text-[8px] md:text-[10px] font-bold text-cyan-400 mt-1 uppercase tracking-widest">{analytics.progressLabel}</span>
+                        <span className="text-[8px] md:text-[10px] font-bold text-cyan-400 mt-1 uppercase tracking-widest">{t('cityLeague')}</span>
                     </div>
 
                     {/* Orbital Icons */}
@@ -50,7 +52,12 @@ const AnalyticsPanel = () => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-4 flex-1">
-                {analytics.stats.map((stat, i) => (
+                {[
+                    { label: t('inRating'), val: analytics.stats[0]?.val || '#12' },
+                    { label: t('tasks'), val: analytics.stats[1]?.val || '89/120' },
+                    { label: t('allStudents'), val: analytics.stats[2]?.val || '1,247' },
+                    { label: t('lessonStatus'), val: analytics.stats[3]?.val || '247' },
+                ].map((stat, i) => (
                     <div key={i} className="bg-[#0A2540]/60 backdrop-blur-xl border border-white/10 rounded-[1.8rem] p-6 flex flex-col justify-center hover:border-cyan-400/30 transition-all group">
                         <p className="text-cyan-400 text-[9px] font-black uppercase tracking-[0.2em] mb-1 group-hover:scale-105 transition-transform origin-left">{stat.label}</p>
                         <p className="text-2xl font-black tracking-tight">{stat.val}</p>

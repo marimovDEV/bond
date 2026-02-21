@@ -1,39 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useContent } from '../context/ContentContext';
+import { useLanguage } from '../context/LanguageContext';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
+import { FiCalendar, FiClock, FiMapPin } from 'react-icons/fi';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-const Countdown = ({ countdown }) => {
-    const [timeLeft, setTimeLeft] = useState({ ...countdown });
+const Countdown = ({ targetDate }) => {
+    const { t } = useLanguage();
+    const calculateTimeLeft = () => {
+        const difference = +new Date(targetDate) - +new Date();
+        let timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+
+        if (difference > 0) {
+            timeLeft = {
+                days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                minutes: Math.floor((difference / 1000 / 60) % 60),
+                seconds: Math.floor((difference / 1000) % 60)
+            };
+        }
+        return timeLeft;
+    };
+
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setTimeLeft(prev => {
-                if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
-                if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-                if (prev.hours > 0) return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
-                if (prev.days > 0) return { ...prev, days: prev.days - 1, hours: 23, minutes: 59, seconds: 59 };
-                return prev;
-            });
+            setTimeLeft(calculateTimeLeft());
         }, 1000);
         return () => clearInterval(timer);
-    }, [countdown]);
+    }, [targetDate]);
 
     return (
         <div className="flex justify-center lg:justify-start gap-3 mb-16 flex-wrap">
             {[
-                { val: timeLeft.days, label: 'KUN' },
-                { val: timeLeft.hours, label: 'SOAT' },
-                { val: timeLeft.minutes, label: 'MINUT' },
-                { val: timeLeft.seconds, label: 'SEKUNDT' }
+                { val: timeLeft.days, label: 'days' },
+                { val: timeLeft.hours, label: 'hours' },
+                { val: timeLeft.minutes, label: 'minutes' },
+                { val: timeLeft.seconds, label: 'seconds' }
             ].map((box, i) => (
                 <div key={i} className="bg-[#0A1A2F] border border-cyan-400/20 w-20 h-24 md:w-24 md:h-28 rounded-3xl flex flex-col items-center justify-center shadow-2xl relative group overflow-hidden">
                     <div className="absolute inset-0 bg-cyan-400/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <span className="text-2xl md:text-4xl font-black text-white relative z-10 tabular-nums">{String(box.val ?? 0).padStart(2, '0')}</span>
-                    <span className="text-[9px] md:text-[11px] font-black text-cyan-400 tracking-widest mt-2 relative z-10">{box.label}</span>
+                    <span className="text-[9px] md:text-[11px] font-black text-cyan-400 tracking-widest mt-2 relative z-10">{t(box.label)}</span>
                 </div>
             ))}
         </div>
@@ -42,6 +54,7 @@ const Countdown = ({ countdown }) => {
 
 const Hero = () => {
     const { data } = useContent();
+    const { lang } = useLanguage();
     const { olympiads } = data.hero;
 
     return (
@@ -75,16 +88,40 @@ const Hero = () => {
                                     </div>
 
                                     <h1 className="text-4xl sm:text-5xl md:text-[60px] lg:text-[72px] font-black leading-[0.98] mb-8 tracking-tighter">
-                                        <span className="text-white block mb-2">{o.titlePrefix}</span>
-                                        <span className="text-gradient block">{o.titleGradient}</span>
+                                        <span className="text-white block mb-2">{lang === 'uz' ? o.titlePrefixUz : o.titlePrefixRu}</span>
+                                        <span className="text-gradient block">{lang === 'uz' ? o.titleGradientUz : o.titleGradientRu}</span>
                                     </h1>
 
-                                    <p className="text-base md:text-lg text-white/50 mb-12 leading-relaxed font-medium max-w-[550px] mx-auto lg:mx-0 whitespace-pre-line">
-                                        {o.description}
+                                    <p className="text-base md:text-lg text-white/50 mb-10 leading-relaxed font-medium max-w-[550px] mx-auto lg:mx-0 whitespace-pre-line">
+                                        {lang === 'uz' ? o.descriptionUz : o.descriptionRu}
                                     </p>
 
+                                    {/* Meta Info Row */}
+                                    {(o.eventDate || o.eventTime || o.eventLocationUz) && (
+                                        <div className="flex flex-wrap justify-center lg:justify-start gap-6 mb-12 text-sm font-bold uppercase tracking-widest text-white/40">
+                                            {o.eventDate && (
+                                                <div className="flex items-center gap-2">
+                                                    <FiCalendar className="text-cyan-400 text-lg" />
+                                                    <span>{o.eventDate}</span>
+                                                </div>
+                                            )}
+                                            {o.eventTime && (
+                                                <div className="flex items-center gap-2">
+                                                    <FiClock className="text-cyan-400 text-lg" />
+                                                    <span>{o.eventTime}</span>
+                                                </div>
+                                            )}
+                                            {o.eventLocationUz && (
+                                                <div className="flex items-center gap-2">
+                                                    <FiMapPin className="text-cyan-400 text-lg" />
+                                                    <span>{lang === 'uz' ? o.eventLocationUz : o.eventLocationRu}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
                                     {/* Countdown */}
-                                    <Countdown countdown={o.countdown} />
+                                    <Countdown targetDate={o.targetDate} />
 
                                     <a
                                         href={o.ctaLink}
@@ -92,7 +129,7 @@ const Hero = () => {
                                         rel="noopener noreferrer"
                                         className="inline-block w-full sm:w-auto bg-gradient-to-r from-[#FF8A00] to-[#FFC700] text-black px-12 py-5 rounded-full text-lg font-black tracking-tight active:scale-95 shadow-[0_10px_40px_rgba(255,138,0,0.3)] hover:shadow-[0_15px_50px_rgba(255,138,0,0.5)] transition-all duration-300 uppercase text-center"
                                     >
-                                        {o.ctaText}
+                                        {lang === 'uz' ? o.ctaTextUz : o.ctaTextRu}
                                     </a>
                                 </motion.div>
 

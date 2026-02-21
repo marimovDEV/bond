@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ContentProvider } from './context/ContentContext';
 import { AuthProvider } from './context/AuthContext';
+import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import RankingSection from './components/RankingSection';
@@ -38,41 +39,43 @@ const LandingPage = () => (
 
 function App() {
     return (
-        <AuthProvider>
-            <ContentProvider>
-                <Router>
-                    <div className="min-h-screen global-bg selection:bg-cyan-500/30 selection:text-white">
-                        <Routes>
-                            <Route path="/" element={<LandingPage />} />
+        <LanguageProvider>
+            <AuthProvider>
+                <ContentProvider>
+                    <Router>
+                        <div className="min-h-screen global-bg selection:bg-cyan-500/30 selection:text-white">
+                            <Routes>
+                                <Route path="/" element={<LandingPage />} />
 
-                            {/* Admin Login */}
-                            <Route path="/admin/login" element={<AdminLogin />} />
+                                {/* Admin Login */}
+                                <Route path="/admin/login" element={<AdminLogin />} />
 
-                            {/* Protected Admin Routes */}
-                            <Route
-                                path="/admin"
-                                element={
-                                    <ProtectedRoute>
-                                        <AdminLayout />
-                                    </ProtectedRoute>
-                                }
-                            >
-                                <Route index element={<Dashboard />} />
-                                <Route path="hero" element={<HeroEditor />} />
-                                <Route path="ranking" element={<RankingManager />} />
-                                <Route path="tutorial" element={<TutorialEditor />} />
-                                <Route path="partners" element={<PartnersManager />} />
-                                <Route path="hall-of-fame" element={<HallOfFameEditor />} />
-                                <Route path="analytics" element={<AnalyticsEditor />} />
-                            </Route>
+                                {/* Protected Admin Routes */}
+                                <Route
+                                    path="/admin"
+                                    element={
+                                        <ProtectedRoute>
+                                            <AdminLayout />
+                                        </ProtectedRoute>
+                                    }
+                                >
+                                    <Route index element={<Dashboard />} />
+                                    <Route path="hero" element={<HeroEditor />} />
+                                    <Route path="ranking" element={<RankingManager />} />
+                                    <Route path="tutorial" element={<TutorialEditor />} />
+                                    <Route path="partners" element={<PartnersManager />} />
+                                    <Route path="hall-of-fame" element={<HallOfFameEditor />} />
+                                    <Route path="analytics" element={<AnalyticsEditor />} />
+                                </Route>
 
-                            {/* Catch-all */}
-                            <Route path="*" element={<Navigate to="/" replace />} />
-                        </Routes>
-                    </div>
-                </Router>
-            </ContentProvider>
-        </AuthProvider>
+                                {/* Catch-all */}
+                                <Route path="*" element={<Navigate to="/" replace />} />
+                            </Routes>
+                        </div>
+                    </Router>
+                </ContentProvider>
+            </AuthProvider>
+        </LanguageProvider>
     );
 }
 

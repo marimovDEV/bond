@@ -12,15 +12,16 @@ class HeroSectionViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET', 'PUT', 'PATCH'])
 def hero_singleton(request):
-    """Get or update the single Hero section config."""
-    hero, _ = HeroSection.objects.get_or_create(pk=1)
+    """Get or update the Hero section config (supports multiple olympiads)."""
     if request.method == 'GET':
-        return Response(HeroSectionSerializer(hero).data)
-    serializer = HeroSectionSerializer(hero, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        olympiads = HeroSection.objects.all().order_by('order')
+        return Response({
+            'olympiads': HeroSectionSerializer(olympiads, many=True, context={'request': request}).data
+        })
+    
+    # For simplicity in local dev, PUT/PATCH could update a specific one or handle bulk
+    # But for now, let's keep GET as the primary sink
+    return Response({"message": "Use /api/hero_items/ for CRUD operations"}, status=status.HTTP_200_OK)
 
 
 class RankingViewSet(viewsets.ModelViewSet):

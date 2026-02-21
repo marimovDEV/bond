@@ -5,6 +5,7 @@ from . import views
 router = DefaultRouter()
 router.register(r'ranking', views.RankingViewSet, basename='ranking')
 router.register(r'partners', views.PartnerViewSet, basename='partners')
+router.register(r'hero_items', views.HeroSectionViewSet, basename='hero-items')
 
 urlpatterns = [
     path('', views.api_overview, name='api-overview'),

@@ -63,13 +63,25 @@ const TutorialEditor = () => {
                 {/* Left: Text */}
                 <div className="bg-[#0A1A2F] border border-white/10 p-8 rounded-[2.5rem] space-y-5">
                     <h3 className="text-lg font-black uppercase tracking-tight">Matnlar</h3>
-                    <div>
-                        <label className="text-[10px] font-black uppercase text-white/30 mb-2 block tracking-widest">Sarlavha</label>
-                        <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className={inputCls} />
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="text-[10px] font-black uppercase text-white/30 mb-2 block tracking-widest">Sarlavha (UZ)</label>
+                            <input value={form.titleUz || ''} onChange={e => setForm({ ...form, titleUz: e.target.value })} className={inputCls} />
+                        </div>
+                        <div>
+                            <label className="text-[10px] font-black uppercase text-white/30 mb-2 block tracking-widest">Sarlavha (RU)</label>
+                            <input value={form.titleRu || ''} onChange={e => setForm({ ...form, titleRu: e.target.value })} className={inputCls} />
+                        </div>
                     </div>
-                    <div>
-                        <label className="text-[10px] font-black uppercase text-white/30 mb-2 block tracking-widest">Tavsif</label>
-                        <textarea rows="4" value={form.subtitle} onChange={e => setForm({ ...form, subtitle: e.target.value })} className={`${inputCls} resize-none`} />
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="text-[10px] font-black uppercase text-white/30 mb-2 block tracking-widest">Tavsif (UZ)</label>
+                            <textarea rows="4" value={form.subtitleUz || ''} onChange={e => setForm({ ...form, subtitleUz: e.target.value })} className={`${inputCls} resize-none`} />
+                        </div>
+                        <div>
+                            <label className="text-[10px] font-black uppercase text-white/30 mb-2 block tracking-widest">Tavsif (RU)</label>
+                            <textarea rows="4" value={form.subtitleRu || ''} onChange={e => setForm({ ...form, subtitleRu: e.target.value })} className={`${inputCls} resize-none`} />
+                        </div>
                     </div>
 
                     {/* Thumbnail */}

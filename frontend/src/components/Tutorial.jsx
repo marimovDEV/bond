@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiPlay } from 'react-icons/fi';
 import { useContent } from '../context/ContentContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const Tutorial = () => {
     const { data } = useContent();
     const { tutorial } = data;
+    const { lang, t } = useLanguage();
     const [isPlaying, setIsPlaying] = useState(false);
 
     // Determine video source: uploaded file > YouTube URL
@@ -65,7 +67,7 @@ const Tutorial = () => {
                         viewport={{ once: true }}
                         className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4"
                     >
-                        {tutorial.title.split(' ').map((word, i, arr) =>
+                        {(lang === 'uz' ? tutorial.titleUz : tutorial.titleRu)?.split(' ').map((word, i, arr) =>
                             i === arr.length - 1
                                 ? <span key={i} className="text-gradient"> {word}</span>
                                 : <span key={i}>{word} </span>
@@ -78,7 +80,7 @@ const Tutorial = () => {
                         transition={{ delay: 0.1 }}
                         className="text-white/40 text-sm md:text-base max-w-2xl mx-auto font-medium"
                     >
-                        {tutorial.subtitle}
+                        {lang === 'uz' ? tutorial.subtitleUz : tutorial.subtitleRu}
                     </motion.p>
                 </div>
 
@@ -119,7 +121,7 @@ const Tutorial = () => {
                                     </div>
                                     {!hasVideo && (
                                         <p className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap text-white/20 text-[10px] uppercase font-bold tracking-widest">
-                                            Admin paneldan video yuklang
+                                            {t('uploadFromAdmin')}
                                         </p>
                                     )}
                                 </div>
@@ -132,14 +134,14 @@ const Tutorial = () => {
                                     <div>
                                         <p className="text-white text-xs font-black uppercase tracking-widest">BOND OLYMPIAD</p>
                                         <p className="text-white/40 text-[10px] font-medium uppercase">
-                                            {hasVideo ? 'VIDEO MAVJUD • Ko\'rish uchun bosing' : 'Video hali yuklanmagan'}
+                                            {hasVideo ? `${t('videoAvailable')} • ${t('clickToWatch')}` : t('noVideo')}
                                         </p>
                                     </div>
                                 </div>
                                 <div className="hidden md:flex items-center gap-3">
                                     <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${hasVideo ? 'bg-cyan-400' : 'bg-white/20'}`} />
                                     <span className="text-white/40 text-[10px] font-black uppercase tracking-widest">
-                                        {hasVideo ? 'Tayyor' : 'Kutilmoqda'}
+                                        {hasVideo ? t('ready') : t('waiting')}
                                     </span>
                                 </div>
                             </div>

@@ -2,16 +2,18 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FiAward } from 'react-icons/fi';
 import { useContent } from '../context/ContentContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const LiveRanking = () => {
     const { data } = useContent();
+    const { lang, t } = useLanguage();
     const { ranking } = data;
 
     return (
         <div className="bg-[#0A2540]/60 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-6 md:p-8 shadow-2xl h-full flex flex-col">
             <div className="flex items-center justify-between mb-8">
                 <h2 className="text-xl md:text-2xl font-black uppercase tracking-tighter flex items-center gap-3">
-                    Live Reyting
+                    {t('liveRating')}
                     <span className="w-8 h-1 bg-cyan-400 mt-2 block rounded-full md:hidden lg:block" />
                 </h2>
                 <div className="flex gap-3">

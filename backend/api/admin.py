@@ -4,7 +4,7 @@ from .models import HeroSection, Ranking, Partner, Tutorial
 
 @admin.register(HeroSection)
 class HeroSectionAdmin(admin.ModelAdmin):
-    list_display = ['title_prefix', 'title_gradient', 'cta_text', 'updated_at']
+    list_display = ['title_prefix_uz', 'title_gradient_uz', 'cta_text_uz', 'updated_at']
     readonly_fields = ['updated_at']
 
 
@@ -18,12 +18,12 @@ class RankingAdmin(admin.ModelAdmin):
 
 @admin.register(Partner)
 class PartnerAdmin(admin.ModelAdmin):
-    list_display = ['name', 'website', 'order', 'is_active']
+    list_display = ['name_uz', 'website', 'order', 'is_active']
     list_editable = ['order', 'is_active']
-    search_fields = ['name']
+    search_fields = ['name_uz']
 
 
 @admin.register(Tutorial)
 class TutorialAdmin(admin.ModelAdmin):
-    list_display = ['title', 'video_url', 'updated_at']
+    list_display = ['title_uz', 'video_url', 'updated_at']
     readonly_fields = ['updated_at']

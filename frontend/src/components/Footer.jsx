@@ -1,7 +1,9 @@
 import React from 'react';
 import { FiArrowUp } from 'react-icons/fi';
+import { useLanguage } from '../context/LanguageContext';
 
 const Footer = () => {
+    const { t } = useLanguage();
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
     return (
@@ -16,43 +18,43 @@ const Footer = () => {
                         <span className="text-[#FFB800] text-[10px] font-bold tracking-[0.2em] border border-[#FFB800]/30 px-1 py-0.5 mt-0.5 rounded-sm uppercase w-fit">OLYMPIAD</span>
                     </div>
                     <p className="text-white/40 text-sm leading-relaxed max-w-xs mx-auto md:mx-0">
-                        Ta'lim sohasidagi eng yaxshi olimpiadalar platformasi
+                        {t('platformDescription')}
                     </p>
                 </div>
 
                 <div className="pt-2 md:pt-0">
-                    <h4 className="text-sm md:text-lg font-black mb-4 md:mb-6 uppercase tracking-wider md:tracking-normal">Bo'limlar</h4>
+                    <h4 className="text-sm md:text-lg font-black mb-4 md:mb-6 uppercase tracking-wider md:tracking-normal">{t('navigation')}</h4>
                     <ul className="space-y-2 md:space-y-4 text-xs md:text-sm text-white/40 font-medium">
-                        <li className="hover:text-white cursor-pointer transition-colors">Olimpiadalar</li>
-                        <li className="hover:text-white cursor-pointer transition-colors">Reyting</li>
-                        <li className="hover:text-white cursor-pointer transition-colors">Tayyorgarlik</li>
-                        <li className="hover:text-white cursor-pointer transition-colors">Shon-sharaf</li>
+                        <li className="hover:text-white cursor-pointer transition-colors">{t('olympiads')}</li>
+                        <li className="hover:text-white cursor-pointer transition-colors">{t('rating')}</li>
+                        <li className="hover:text-white cursor-pointer transition-colors">{t('preparation')}</li>
+                        <li className="hover:text-white cursor-pointer transition-colors">{t('fame')}</li>
                     </ul>
                 </div>
 
                 <div className="pt-2 md:pt-0">
-                    <h4 className="text-sm md:text-lg font-black mb-4 md:mb-6 uppercase tracking-wider md:tracking-normal">Ma'lumot</h4>
+                    <h4 className="text-sm md:text-lg font-black mb-4 md:mb-6 uppercase tracking-wider md:tracking-normal">{t('contacts')}</h4>
                     <ul className="space-y-2 md:space-y-4 text-xs md:text-sm text-white/40 font-medium">
-                        <li className="hover:text-white cursor-pointer transition-colors">Biz haqimizda</li>
-                        <li className="hover:text-white cursor-pointer transition-colors">Kontaktlar</li>
-                        <li className="hover:text-white cursor-pointer transition-colors">Shartlar</li>
-                        <li className="hover:text-white cursor-pointer transition-colors">Maxfiylik</li>
+                        <li className="hover:text-white cursor-pointer transition-colors">{t('aboutUs')}</li>
+                        <li className="hover:text-white cursor-pointer transition-colors">{t('contacts')}</li>
+                        <li className="hover:text-white cursor-pointer transition-colors">{t('terms')}</li>
+                        <li className="hover:text-white cursor-pointer transition-colors">{t('privacy')}</li>
                     </ul>
                 </div>
 
                 <div className="col-span-2 md:col-span-1 pt-8 md:pt-0 border-t border-white/5 md:border-0">
-                    <h4 className="text-sm md:text-lg font-black mb-4 md:mb-6 uppercase tracking-wider md:tracking-normal">Bog'lanish</h4>
+                    <h4 className="text-sm md:text-lg font-black mb-4 md:mb-6 uppercase tracking-wider md:tracking-normal">{t('contacts')}</h4>
                     <ul className="space-y-2 md:space-y-4 text-xs md:text-sm text-white/40 font-medium">
-                        <li>Email: <span className="text-white block md:inline mt-1 md:mt-0">info@bondolimp.uz</span></li>
-                        <li>Tel: <span className="text-white block md:inline mt-1 md:mt-0">+998 71 123 45 67</span></li>
-                        <li>Manzil: <span className="text-white block md:inline mt-1 md:mt-0">Toshkent, O'zbekiston</span></li>
+                        <li>{t('emailLabel')} <span className="text-white block md:inline mt-1 md:mt-0">info@bondolimp.uz</span></li>
+                        <li>{t('phoneLabel')} <span className="text-white block md:inline mt-1 md:mt-0">+998 71 123 45 67</span></li>
+                        <li>{t('addressLabel')} <span className="text-white block md:inline mt-1 md:mt-0">{t('addressData')}</span></li>
                     </ul>
                 </div>
             </div>
 
             <div className="max-w-[1400px] mx-auto px-6 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
                 <p className="text-white/20 text-[10px] md:text-xs font-medium text-center md:text-left">
-                    © 2024 BOND Olimpiada. Barcha huquqlar himoyalangan.
+                    © 2024 BOND Olimpiada. {t('copyright')}
                 </p>
 
                 <button

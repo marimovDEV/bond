@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiSend } from 'react-icons/fi';
+import { useLanguage } from '../context/LanguageContext';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [activeModal, setActiveModal] = useState(null); // 'contact' | null
+    const { lang, toggleLanguage, t } = useLanguage();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -27,12 +29,12 @@ const Navbar = () => {
     };
 
     const navLinks = [
-        { name: 'Olimpiadalar', id: 'hero' },
-        { name: 'Reyting', id: 'ranking' },
-        { name: 'Shon-sharaf Zali', id: 'hall-of-fame' },
-        { name: 'Qo\'llanma', id: 'tutorial' },
-        { name: 'Hamkorlar', id: 'partners' },
-        { name: 'Kontaktlar', id: 'footer', onClick: () => setActiveModal('contact') }
+        { name: t('home'), id: 'hero' },
+        { name: t('rating'), id: 'ranking' },
+        { name: t('fame'), id: 'hall-of-fame' },
+        { name: t('tutorial'), id: 'tutorial' },
+        { name: t('partners'), id: 'partners' },
+        { name: t('contacts'), id: 'footer', onClick: () => setActiveModal('contact') }
     ];
 
     const Modal = ({ type, onClose }) => (
@@ -102,13 +104,19 @@ const Navbar = () => {
 
                     {/* Right Actions (Desktop) */}
                     <div className="hidden lg:flex items-center gap-5 shrink-0">
+                        <button
+                            onClick={toggleLanguage}
+                            className="text-white/70 hover:text-white font-bold text-sm tracking-wider uppercase transition-colors"
+                        >
+                            {lang === 'uz' ? 'RU' : 'UZ'}
+                        </button>
                         <a
-                            href="https://bondolympiad.uz"
+                            href="https://bondolympiad.uz/register/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-2.5 rounded-xl text-[13px] font-black tracking-tight hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all text-white active:scale-95 uppercase"
                         >
-                            Ro'yxatdan o'tish
+                            {t('registerLabel')}
                         </a>
                     </div>
 
@@ -148,16 +156,25 @@ const Navbar = () => {
                                 </motion.button>
                             ))}
                             <div className="w-full h-px bg-white/10 my-4" />
+                            <motion.button
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.25 }}
+                                onClick={toggleLanguage}
+                                className="w-full bg-white/5 border border-white/10 text-white py-4 rounded-2xl font-black text-lg uppercase block"
+                            >
+                                Til: {lang === 'uz' ? 'Русский' : 'O\'zbekcha'}
+                            </motion.button>
                             <motion.a
-                                href="https://bondolympiad.uz"
+                                href="https://bondolympiad.uz/register/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.3 }}
-                                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-4 rounded-2xl font-black text-lg shadow-[0_10px_30px_rgba(6,182,212,0.3)] uppercase block"
+                                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-4 rounded-2xl font-black text-lg shadow-[0_10px_30px_rgba(6,182,212,0.3)] uppercase block text-center"
                             >
-                                Ro'yxatdan o'tish
+                                {t('registerLabel')}
                             </motion.a>
                         </div>
                     </motion.div>
