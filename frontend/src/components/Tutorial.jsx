@@ -88,7 +88,7 @@ const Tutorial = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="relative max-w-[1000px] mx-auto rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl group min-h-[300px] max-h-[80vh] flex items-center justify-center bg-black"
+                    className="relative max-w-[450px] mx-auto rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl group aspect-[9/16] max-h-[80vh] flex items-center justify-center bg-black"
                     onClick={() => !isPlaying && setIsPlaying(true)}
                 >
                     {/* Playing State */}
