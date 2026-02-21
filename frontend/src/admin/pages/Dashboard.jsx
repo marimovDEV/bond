@@ -5,10 +5,21 @@ import { FiUsers, FiClock, FiStar, FiActivity } from 'react-icons/fi';
 const Dashboard = () => {
     const { data } = useContent();
 
+    const calculateDaysLeft = () => {
+        try {
+            const firstEvent = data.hero.olympiads?.[0];
+            if (!firstEvent || !firstEvent.targetDate) return 0;
+            const diff = new Date(firstEvent.targetDate) - new Date();
+            return Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
+        } catch {
+            return 0;
+        }
+    };
+
     const stats = [
         { name: 'Olimpiada Qatnashchilari', value: '1,280', icon: <FiUsers />, color: 'text-cyan-400' },
         { name: 'Reytingdagi O\'quvchilar', value: data.ranking.length, icon: <FiActivity />, color: 'text-blue-400' },
-        { name: 'Qolgan Vaqt (Kun)', value: data.hero.countdown.days, icon: <FiClock />, color: 'text-orange-400' },
+        { name: 'Qolgan Vaqt (Kun)', value: calculateDaysLeft(), icon: <FiClock />, color: 'text-orange-400' },
         { name: 'Hamkorlar', value: data.partners.length, icon: <FiStar />, color: 'text-yellow-400' },
     ];
 
