@@ -44,8 +44,8 @@ const initialData = {
     tutorial: {
         title: "Video Qo'llanma",
         subtitle: "Sizni platformadan foydalanish qulayligi uchun maxsus tayyorlangan video-darslik. Bu yerda barcha savollaringizga javob topasiz.",
-        videoUrl: "",         // YouTube embed or external URL
-        videoBase64: null,    // uploaded local video (base64 data URL)
+        videoUrl: "/videos/IMG_8936.MOV",         // Updated default video
+        videoBase64: null,
         thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
     },
     partners: [

@@ -23,6 +23,20 @@ const Tutorial = () => {
             );
         }
         if (tutorial.videoUrl) {
+            // Check if it's a local path or external non-YouTube video
+            const isLocal = tutorial.videoUrl.startsWith('/') || !tutorial.videoUrl.includes('youtube.com') && !tutorial.videoUrl.includes('youtu.be');
+
+            if (isLocal) {
+                return (
+                    <video
+                        src={tutorial.videoUrl}
+                        controls
+                        autoPlay
+                        className="w-full h-full object-contain bg-black"
+                    />
+                );
+            }
+
             const embedUrl = tutorial.videoUrl.includes('embed')
                 ? tutorial.videoUrl
                 : tutorial.videoUrl.replace('watch?v=', 'embed/');
